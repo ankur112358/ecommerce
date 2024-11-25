@@ -13,7 +13,7 @@ class ProductAPITestCase(APITestCase):
         }
 
     def test_create_product_success(self):
-        url = "/api/products/"
+        url = "/products/"
         response = self.client.post(url, self.valid_product_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Product.objects.count(), 1)
@@ -22,7 +22,7 @@ class ProductAPITestCase(APITestCase):
 
     def test_get_products(self):
         Product.objects.create(**self.valid_product_data)
-        url = "/api/products/"
+        url = "/products/"
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
@@ -39,7 +39,7 @@ class OrderAPITestCase(APITestCase):
         )
 
     def test_create_order_success(self):
-        url = "/api/orders/"
+        url = "/orders/"
         order_data = {
             "products": [
                 {"product_id": self.product1.id, "quantity": 2},
@@ -52,7 +52,7 @@ class OrderAPITestCase(APITestCase):
         self.assertEqual(float(response.data["total_price"]), 2100.00)
 
     def test_create_order_insufficient_stock(self):
-        url = "/api/orders/"
+        url = "/orders/"
         order_data = {
             "products": [
                 {"product_id": self.product1.id, "quantity": 200}  # Exceeds stock
@@ -63,7 +63,7 @@ class OrderAPITestCase(APITestCase):
         self.assertIn("Insufficient stock", response.data[0])
 
     def test_create_order_invalid_product(self):
-        url = "/api/orders/"
+        url = "/orders/"
         order_data = {
             "products": [
                 {"product_id": 999, "quantity": 1}  # Non-existent product
