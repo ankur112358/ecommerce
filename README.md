@@ -11,3 +11,5 @@ To specifically run the test
 ## Configuration
 The db configuration can be controlled using the env vars setup in the
 [docker compose file](/docker-compose.yml).
+
+Postman collection from [here](/postman_collection.json) can be loaded to play around with the APIs.
